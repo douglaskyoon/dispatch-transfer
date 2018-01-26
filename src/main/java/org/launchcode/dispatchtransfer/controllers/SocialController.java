@@ -1,6 +1,7 @@
 package org.launchcode.dispatchtransfer.controllers;
 
 
+import org.launchcode.dispatchtransfer.models.Patient;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +13,7 @@ public class SocialController {
     @RequestMapping(value="")
     public String index(Model model){
         model.addAttribute("title", "Schedule a Transfer");
+        model.addAttribute(new Patient());
         return "social/index";
     }
 
