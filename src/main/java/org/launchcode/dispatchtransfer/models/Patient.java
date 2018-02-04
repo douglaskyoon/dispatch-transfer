@@ -1,6 +1,16 @@
 package org.launchcode.dispatchtransfer.models;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+
+@Entity
 public class Patient {
+
+    @Id
+    @GeneratedValue
+    private int id;
 
     private String name;
 
@@ -9,6 +19,9 @@ public class Patient {
     private String destination;
 
     private String time;
+
+    @ManyToOne
+    private SocialWorker socialworker;
 
     public Patient() {}
 
@@ -50,4 +63,10 @@ public class Patient {
     public void setTime(String time) {
         this.time = time;
     }
+
+    public int getId() {
+        return id;
+    }
+
+
 }

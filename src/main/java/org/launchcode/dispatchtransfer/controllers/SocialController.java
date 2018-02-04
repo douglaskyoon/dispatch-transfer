@@ -2,6 +2,7 @@ package org.launchcode.dispatchtransfer.controllers;
 
 
 import org.launchcode.dispatchtransfer.models.Patient;
+import org.launchcode.dispatchtransfer.models.SocialWorker;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,7 @@ public class SocialController {
     @RequestMapping(value="register")
     public String register(Model model){
         model.addAttribute("title", "Register Social Worker");
+        model.addAttribute(new SocialWorker());
         return "social/register";
     }
 }
