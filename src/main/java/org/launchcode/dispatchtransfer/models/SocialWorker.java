@@ -1,6 +1,10 @@
 package org.launchcode.dispatchtransfer.models;
 
+
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +15,12 @@ public class SocialWorker {
     @GeneratedValue
     private int id;
 
+    @NotNull
+    @Size(min=3, max=20)
     private String username;
 
+    @NotNull
+    @Size(min=3, max=20)
     private String password;
 
     @OneToMany
