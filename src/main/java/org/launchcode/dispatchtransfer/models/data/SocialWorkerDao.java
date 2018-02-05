@@ -11,5 +11,7 @@ import javax.transaction.Transactional;
 @Transactional
 public interface SocialWorkerDao extends CrudRepository<SocialWorker, Integer> {
 
+    public SocialWorker findByUsername(String username);
+
 
 }

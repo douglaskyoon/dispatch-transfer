@@ -52,8 +52,8 @@ public class DispatchController {
                                   @RequestParam String verify){
 
         if (errors.hasErrors() || !dispatcher.getPassword().equals(verify)) {
-            model.addAttribute("title", "Register Dispatcher User");
-            return "social/register";
+            model.addAttribute("title", "Register Dispatch User");
+            return "dispatch/register";
 
         }
         dispatchDao.save(dispatcher);

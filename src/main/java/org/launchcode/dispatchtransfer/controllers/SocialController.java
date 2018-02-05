@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import java.sql.*;
 
 import javax.validation.Valid;
 import java.lang.annotation.Annotation;
@@ -33,6 +34,15 @@ public class SocialController {
     @RequestMapping(value="login")
     public String login(Model model){
         model.addAttribute("title", "Login Social Worker");
+        return "social/login";
+    }
+
+    @RequestMapping(value="login")
+    public String login(Model model, @RequestParam String username, @RequestParam String password){
+        SocialWorker user = socialworkerDao.findByUsername(username);
+        if (user.getPassword().equals(password)){
+            return "redirect:";
+        }
         return "social/login";
     }
 
