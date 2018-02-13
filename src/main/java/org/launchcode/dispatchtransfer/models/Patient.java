@@ -16,6 +16,8 @@ public class Patient {
 
     private String pickup;
 
+    private Integer room;
+
     private String destination;
 
     private String time;
@@ -25,9 +27,10 @@ public class Patient {
 
     public Patient() {}
 
-    public Patient(String name, String pickup, String destination, String time) {
+    public Patient(String name, String pickup, Integer room, String destination, String time) {
         this.name = name;
         this.pickup = pickup;
+        this.room = room;
         this.destination = destination;
         this.time = time;
     }
@@ -69,4 +72,11 @@ public class Patient {
     }
 
 
+    public Integer getRoom() {
+        return room;
+    }
+
+    public void setRoom(Integer room) {
+        this.room = room;
+    }
 }

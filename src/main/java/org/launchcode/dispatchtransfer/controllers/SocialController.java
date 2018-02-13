@@ -3,6 +3,7 @@ package org.launchcode.dispatchtransfer.controllers;
 
 import org.launchcode.dispatchtransfer.models.Patient;
 import org.launchcode.dispatchtransfer.models.SocialWorker;
+import org.launchcode.dispatchtransfer.models.data.PatientDao;
 import org.launchcode.dispatchtransfer.models.data.SocialWorkerDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,10 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import java.sql.*;
+
 
 import javax.validation.Valid;
-import java.lang.annotation.Annotation;
+
 
 @Controller
 @RequestMapping(value="social")
@@ -24,6 +25,9 @@ public class SocialController {
     @Autowired
     private SocialWorkerDao socialworkerDao;
 
+    @Autowired
+    private PatientDao patientDao;
+
     @RequestMapping(value="")
     public String index(Model model){
         model.addAttribute("title", "Schedule a Transfer");
@@ -31,18 +35,36 @@ public class SocialController {
         return "social/index";
     }
 
-    @RequestMapping(value="login")
-    public String login(Model model){
+    @RequestMapping(value="sent", method = RequestMethod.POST)
+    public String sent(@ModelAttribute @Valid Patient patient, Errors errors, Model model){
+        model.addAttribute("title", "transfer sent");
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Schedule a Transfer");
+            return "social/index";
+        }
+
+        patientDao.save(patient);
+
+        return "social/sent";
+    }
+
+
+    @RequestMapping(value="login", method = RequestMethod.GET)
+    public String displaylogin(Model model){
         model.addAttribute("title", "Login Social Worker");
         return "social/login";
     }
 
-    @RequestMapping(value="login")
-    public String login(Model model, @RequestParam String username, @RequestParam String password){
-        SocialWorker user = socialworkerDao.findByUsername(username);
-        if (user.getPassword().equals(password)){
+    @RequestMapping(value="login", method = RequestMethod.POST)
+    public String processlogin(Model model, @RequestParam String username, @RequestParam String password){
+        model.addAttribute("title", "Welcome");
+        SocialWorker socialworker = socialworkerDao.findByUsername(username);
+
+        if(socialworker.getPassword().equals(password)){
             return "redirect:";
+
         }
+
         return "social/login";
     }
 

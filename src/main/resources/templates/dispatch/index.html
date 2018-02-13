@@ -8,9 +8,15 @@
 
 <p th:unless="${patients} and ${patients.size()}">no trips :)</p>
 
-<ul th:each="patient : ${patients}">
-    <li th:text="${patient.pickup}"></li>
-</ul>
+<div th:each="patient : ${patients}">
+    <form>
+
+        <p th:text="${patient.pickup}"></p>
+        <input type="submit" value="Enroute"/>
+
+
+    </form>
+</div>
 
 </body>
 </html>

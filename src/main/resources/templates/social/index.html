@@ -6,11 +6,13 @@
 </head>
 <body>
 
-<form method="post" th:object="${patient}">
+<form method="post" th:object="${patient}" th:action="@{/social/sent}">
     <h3>Patient Name</h3>
     <input type="text" th:field="*{name}"/>
     <h3>Pick Up Location</h3>
     <input type="text" th:field="*{pickup}"/>
+    <h3>Room Number</h3>
+    <input type="text" th:field="*{room}"/>
     <h3>Destination</h3>
     <input type="text" th:field="*{destination}"/>
     <h3>Pick Up Time and Date</h3>

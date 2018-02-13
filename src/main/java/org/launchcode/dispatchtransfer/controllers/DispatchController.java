@@ -26,11 +26,18 @@ public class DispatchController {
     @Autowired
     private PatientDao patientDao;
 
-    @RequestMapping(value="")
+    @RequestMapping(value="", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("patients", patientDao.findAll());
         model.addAttribute("title", "Transfer Schedule");
 
+        return "dispatch/index";
+    }
+
+    @RequestMapping(value="patient", method = RequestMethod.POST)
+    public String patient(Model model) {
+        model.addAttribute("patients", patientDao.findAll());
+        model.addAttribute("title", "Transfer Schedule");
         return "dispatch/index";
     }
 
