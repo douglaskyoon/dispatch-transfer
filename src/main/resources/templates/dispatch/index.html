@@ -9,8 +9,9 @@
 <p th:unless="${patients} and ${patients.size()}">no trips :)</p>
 
 <div th:each="patient : ${patients}">
-    <form>
+    <form th:action="@{/dispatch/enroute}">
 
+        <input type="hidden" th:value="${patient.id}" name="patientId"/>
         <a th:href="'/dispatch/view/' + ${patient.id}" th:text="${patient.pickup}"></a>
         <input type="submit" value="Enroute"/>
 

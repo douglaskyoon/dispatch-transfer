@@ -1,6 +1,9 @@
 package org.launchcode.dispatchtransfer.controllers;
 
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import org.launchcode.dispatchtransfer.models.Dispatcher;
 import org.launchcode.dispatchtransfer.models.Patient;
 import org.launchcode.dispatchtransfer.models.SocialWorker;
@@ -24,6 +27,9 @@ public class DispatchController {
     @Autowired
     private PatientDao patientDao;
 
+    public static final String ACCOUNT_SID = "AC93561add1ece928a0f5f27f88e9bc896";
+    public static final String AUTH_TOKEN = "16f065045afcc772528e18e0726df4fa";
+
     @RequestMapping(value="", method = RequestMethod.GET)
     public String index(Model model) {
         model.addAttribute("patients", patientDao.findAll());
@@ -44,6 +50,17 @@ public class DispatchController {
         Patient patient = patientDao.findOne(patientId);
         model.addAttribute("patient", patient);
         return "dispatch/view";
+    }
+
+    @RequestMapping(value="enroute")
+    public String enroute(@RequestParam int patientId) {
+        Patient patient = patientDao.findOne(patientId);
+        patientDao.delete(patient);
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        Message message = Message.creator(new PhoneNumber("+13143244732"), new PhoneNumber("+13143102524"), "HI its doug").create();
+
+        return "dispatch/enroute";
     }
 
     @RequestMapping(value="login")
