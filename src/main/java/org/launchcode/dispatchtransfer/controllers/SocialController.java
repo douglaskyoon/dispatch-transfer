@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 
@@ -29,19 +30,21 @@ public class SocialController {
     private PatientDao patientDao;
 
     @RequestMapping(value="")
-    public String index(Model model){
+    public String index(Model model, HttpSession user){
         model.addAttribute("title", "Schedule a Transfer");
         model.addAttribute(new Patient());
+        model.addAttribute("user", user.getAttribute("id"));
         return "social/index";
     }
 
     @RequestMapping(value="sent", method = RequestMethod.POST)
-    public String sent(@ModelAttribute @Valid Patient patient, Errors errors, Model model){
+    public String sent(@ModelAttribute @Valid Patient patient, Errors errors, Model model, HttpSession user){
         model.addAttribute("title", "transfer sent");
         if (errors.hasErrors()) {
             model.addAttribute("title", "Schedule a Transfer");
             return "social/index";
         }
+
 
         patientDao.save(patient);
 
@@ -56,15 +59,14 @@ public class SocialController {
     }
 
     @RequestMapping(value="login", method = RequestMethod.POST)
-    public String processlogin(Model model, @RequestParam String username, @RequestParam String password){
+    public String processlogin(HttpSession user, Model model, @RequestParam String username, @RequestParam String password){
         model.addAttribute("title", "Welcome");
         SocialWorker socialworker = socialworkerDao.findByUsername(username);
 
         if(socialworker.getPassword().equals(password)){
+            user.setAttribute("id", socialworker);
             return "redirect:";
-
         }
-
         return "social/login";
     }
 

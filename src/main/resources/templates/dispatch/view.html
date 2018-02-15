@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title></title>
+</head>
+<body>
+
+<table class="table">
+
+    <tr>
+        <th>Name</th>
+        <th>Pickup</th>
+        <th>Room #</th>
+        <th>Destination</th>
+        <th>Time</th>
+    </tr>
+
+    <tr>
+        <td th:text="${patient.name}"></td>
+        <td th:text="${patient.pickup}"></td>
+        <td th:text="${patient.room}"></td>
+        <td th:text="${patient.destination}"></td>
+        <td th:text="${patient.time}"></td>
+    </tr>
+
+</table>
+
+</body>
+</html>

@@ -2,6 +2,7 @@ package org.launchcode.dispatchtransfer.controllers;
 
 
 import org.launchcode.dispatchtransfer.models.Dispatcher;
+import org.launchcode.dispatchtransfer.models.Patient;
 import org.launchcode.dispatchtransfer.models.SocialWorker;
 import org.launchcode.dispatchtransfer.models.data.DispatchDao;
 import org.launchcode.dispatchtransfer.models.data.PatientDao;
@@ -9,10 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -39,6 +37,13 @@ public class DispatchController {
         model.addAttribute("patients", patientDao.findAll());
         model.addAttribute("title", "Transfer Schedule");
         return "dispatch/index";
+    }
+
+    @RequestMapping(value="view/{patientId}", method = RequestMethod.GET)
+    public String view(Model model, @PathVariable int patientId) {
+        Patient patient = patientDao.findOne(patientId);
+        model.addAttribute("patient", patient);
+        return "dispatch/view";
     }
 
     @RequestMapping(value="login")

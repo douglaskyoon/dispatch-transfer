@@ -11,7 +11,7 @@
 <div th:each="patient : ${patients}">
     <form>
 
-        <p th:text="${patient.pickup}"></p>
+        <a th:href="'/dispatch/view/' + ${patient.id}" th:text="${patient.pickup}"></a>
         <input type="submit" value="Enroute"/>
 
 

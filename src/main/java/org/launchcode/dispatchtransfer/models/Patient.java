@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Patient {
@@ -12,14 +13,19 @@ public class Patient {
     @GeneratedValue
     private int id;
 
+    @NotNull
     private String name;
 
+    @NotNull
     private String pickup;
 
+    @NotNull
     private Integer room;
 
+    @NotNull
     private String destination;
 
+    @NotNull
     private String time;
 
     @ManyToOne
@@ -71,7 +77,6 @@ public class Patient {
         return id;
     }
 
-
     public Integer getRoom() {
         return room;
     }
@@ -79,4 +84,6 @@ public class Patient {
     public void setRoom(Integer room) {
         this.room = room;
     }
+
+
 }
