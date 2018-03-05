@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.servlet.http.HttpSession;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -28,8 +29,8 @@ public class Patient {
     @NotNull
     private String time;
 
-    @ManyToOne
-    private SocialWorker socialworker;
+
+    private int socialworker;
 
     public Patient() {}
 
@@ -86,4 +87,11 @@ public class Patient {
     }
 
 
+    public int getSocialworker() {
+        return socialworker;
+    }
+
+    public void setSocialworker(int socialworker) {
+        this.socialworker = socialworker;
+    }
 }

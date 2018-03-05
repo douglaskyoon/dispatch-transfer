@@ -9,12 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -40,15 +38,25 @@ public class SocialController {
     @RequestMapping(value="sent", method = RequestMethod.POST)
     public String sent(@ModelAttribute @Valid Patient patient, Errors errors, Model model, HttpSession user){
         model.addAttribute("title", "transfer sent");
+
         if (errors.hasErrors()) {
             model.addAttribute("title", "Schedule a Transfer");
             return "social/index";
         }
 
-
+        patient.setSocialworker((int) user.getAttribute("id"));
         patientDao.save(patient);
 
+        model.addAttribute("patients", patientDao.findAllBySocialworker((int) user.getAttribute("id")));
+
         return "social/sent";
+    }
+
+    @RequestMapping(value="view/{patientId}", method = RequestMethod.GET)
+    public String view(Model model, @PathVariable int patientId) {
+        Patient patient = patientDao.findOne(patientId);
+        model.addAttribute("patient", patient);
+        return "social/view";
     }
 
 
@@ -59,12 +67,14 @@ public class SocialController {
     }
 
     @RequestMapping(value="login", method = RequestMethod.POST)
-    public String processlogin(HttpSession user, Model model, @RequestParam String username, @RequestParam String password){
+    public String processlogin(HttpServletRequest req, Model model, @RequestParam String username, @RequestParam String password){
         model.addAttribute("title", "Welcome");
         SocialWorker socialworker = socialworkerDao.findByUsername(username);
+        int socialworker_id = socialworker.getId();
 
         if(socialworker.getPassword().equals(password)){
-            user.setAttribute("id", socialworker);
+            HttpSession user = req.getSession();
+            user.setAttribute("id", socialworker_id);
             return "redirect:";
         }
         return "social/login";

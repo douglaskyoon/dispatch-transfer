@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${title}">Welcome</title>
+</head>
+<body>
+
+
+
+<nav th:fragment="navigation">
+    <a href="/dispatch/login">Dispatch Log In</a> |
+    <a href="/social/login">Social Worker Log In</a> |
+    <a href="/dispatch/register">Register Dispatch</a>
+    <a href="/social/register">Register Social Worker</a>
+</nav>
+
+<h1>Welcome!</h1>
+
+</body>
+</html>

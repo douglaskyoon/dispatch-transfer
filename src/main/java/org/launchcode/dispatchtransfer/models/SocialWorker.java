@@ -23,9 +23,8 @@ public class SocialWorker {
     @Size(min=3, max=20)
     private String password;
 
-    @OneToMany
-    @JoinColumn(name = "socialworker_id")
-    private List<Patient> patients = new ArrayList<>();
+
+
 
     public SocialWorker(){}
 

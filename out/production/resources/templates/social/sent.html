@@ -8,12 +8,7 @@
 
 <h1>Your Transfer Request has been Sent</h1>
 
-<div th:each="patient : ${patients}">
-    <a th:href="'/social/view/' + ${patient.id}" th:text="${patient.name}"></a>
-</div>
-
-<footer> 
 <a href="/social">Request another transfer</a>
-</footer>
+
 </body>
 </html>
