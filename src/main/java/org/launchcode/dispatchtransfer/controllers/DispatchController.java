@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 @Controller
@@ -58,14 +59,26 @@ public class DispatchController {
         patientDao.delete(patient);
         Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
 
-        Message message = Message.creator(new PhoneNumber("+13143244732"), new PhoneNumber("+13143102524"), "HI its doug").create();
+        Message message = Message.creator(new PhoneNumber("+13143244732"), new PhoneNumber("+13143102524"), "Ambulance is enroute for room #" + patient.getRoom()).create();
 
         return "dispatch/enroute";
     }
 
-    @RequestMapping(value="login")
+    @RequestMapping(value="login", method = RequestMethod.GET)
     public String login(Model model) {
         model.addAttribute("title", "Login Dispatch");
+        return "dispatch/login";
+    }
+
+    @RequestMapping(value="login", method = RequestMethod.POST)
+    public String processlogin(Model model, @RequestParam String username, @RequestParam String password){
+        model.addAttribute("title", "Welcome");
+        Dispatcher dispatcher = dispatchDao.findByUsername(username);
+
+        if(dispatcher.getPassword().equals(password)){
+
+            return "redirect:";
+        }
         return "dispatch/login";
     }
 

@@ -12,4 +12,7 @@ import javax.transaction.Transactional;
 public interface DispatchDao extends CrudRepository<Dispatcher, Integer> {
 
 
+    public Dispatcher findByUsername(String username);
+
+
 }

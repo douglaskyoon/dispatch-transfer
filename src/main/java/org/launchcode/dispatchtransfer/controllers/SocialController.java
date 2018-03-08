@@ -1,6 +1,9 @@
 package org.launchcode.dispatchtransfer.controllers;
 
 
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
 import org.launchcode.dispatchtransfer.models.Patient;
 import org.launchcode.dispatchtransfer.models.SocialWorker;
 import org.launchcode.dispatchtransfer.models.data.PatientDao;
@@ -27,6 +30,9 @@ public class SocialController {
     @Autowired
     private PatientDao patientDao;
 
+    public static final String ACCOUNT_SID = "AC93561add1ece928a0f5f27f88e9bc896";
+    public static final String AUTH_TOKEN = "16f065045afcc772528e18e0726df4fa";
+
     @RequestMapping(value="")
     public String index(Model model, HttpSession user){
         model.addAttribute("title", "Schedule a Transfer");
@@ -46,6 +52,9 @@ public class SocialController {
 
         patient.setSocialworker((int) user.getAttribute("id"));
         patientDao.save(patient);
+        Twilio.init(ACCOUNT_SID, AUTH_TOKEN);
+
+        Message message = Message.creator(new PhoneNumber("+13143244732"), new PhoneNumber("+13143102524"), "New Patient").create();
 
         model.addAttribute("patients", patientDao.findAllBySocialworker((int) user.getAttribute("id")));
 
